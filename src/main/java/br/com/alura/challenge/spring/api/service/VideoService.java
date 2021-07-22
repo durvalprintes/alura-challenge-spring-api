@@ -27,7 +27,8 @@ public class VideoService {
     }
 
     public Video findOne(String id) throws EntityNotFoundException {
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("error.notfound.video"));
+        return repository.getWithCategoriaById(id)
+                .orElseThrow(() -> new EntityNotFoundException("error.notfound.video"));
     }
 
     public Video createOrUpdate(VideoDto dto, Optional<String> id) {

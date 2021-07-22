@@ -1,6 +1,7 @@
 package br.com.alura.challenge.spring.api.rest;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -36,13 +37,12 @@ public class CategoriaRest {
         if (categorias.isEmpty())
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(categorias);
-
     }
 
-    @PostMapping
     @Transactional
+    @PostMapping
     public ResponseEntity<CategoriaDto> create(@RequestBody @Valid CategoriaDto dto) {
-        Categoria categoria = service.createOrUpdate(Categoria.builder().descricao(dto.getDescricao()).build());
+        Categoria categoria = service.createOrUpdate(dto, Optional.ofNullable(null));
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(categoria.getId()).toUri()).body(dto);
     }
@@ -52,11 +52,19 @@ public class CategoriaRest {
         return ResponseEntity.ok(service.findOne(id));
     }
 
+    @GetMapping("/{id}/videos")
+    public ResponseEntity<Categoria> getVideos(@PathVariable String id) {
+        Categoria categoria = service.findVideos(id);
+        if (categoria.getVideos().isEmpty())
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(categoria);
+    }
+
     @Transactional
     @PutMapping("/{id}")
     public ResponseEntity<CategoriaDto> update(@RequestBody @Valid CategoriaDto dto, @PathVariable String id)
             throws EntityNotFoundException {
-        service.createOrUpdate(Categoria.builder().id(id).descricao(dto.getDescricao()).build());
+        service.createOrUpdate(dto, Optional.ofNullable(id));
         return ResponseEntity.ok(dto);
     }
 
