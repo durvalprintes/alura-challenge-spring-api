@@ -1,4 +1,4 @@
-package br.com.alura.challenge.spring.api.config;
+package br.com.alura.challenge.spring.api.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

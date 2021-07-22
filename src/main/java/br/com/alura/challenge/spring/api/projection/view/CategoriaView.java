@@ -1,4 +1,4 @@
-package br.com.alura.challenge.spring.api.view;
+package br.com.alura.challenge.spring.api.projection.view;
 
 public interface CategoriaView {
 

@@ -18,7 +18,6 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import br.com.alura.challenge.spring.api.dto.ErrorDto;
 import br.com.alura.challenge.spring.api.util.Util;
 
 @ControllerAdvice
@@ -30,9 +29,10 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         @ExceptionHandler(ResourceNotFoundException.class)
         public ResponseEntity<Object> handleResourceNotFound(ResourceNotFoundException ex, WebRequest request) {
                 return new ResponseEntity<>(
-                                ErrorDto.builder().path(((ServletWebRequest) request).getRequest().getRequestURI())
-                                                .status(HttpStatus.NOT_FOUND.value()).error("ResourceNotFoundException")
-                                                .message(getBundleMessage(ex.getMessage())).build(),
+                                new ErrorBuilder(HttpStatus.NOT_FOUND.value())
+                                                .setPath(((ServletWebRequest) request).getRequest().getRequestURI())
+                                                .setError("ResourceNotFoundException")
+                                                .setMessage(getBundleMessage(ex.getMessage())).build(),
                                 HttpStatus.NOT_FOUND);
         }
 
@@ -44,20 +44,21 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                                                 getBundleMessage(messsage.getMessage(error,
                                                                 LocaleContextHolder.getLocale()))))
                                 .collect(Collectors.toList());
-                return ResponseEntity.badRequest().body(ErrorDto.builder()
-                                .path(((ServletWebRequest) request).getRequest().getRequestURI()).status(status.value())
-                                .fields(fields).error("MethodArgumentNotValidException")
-                                .message("Falha na validação do(s) campo(s)").build());
+                return ResponseEntity.badRequest()
+                                .body(new ErrorBuilder(status.value())
+                                                .setPath(((ServletWebRequest) request).getRequest().getRequestURI())
+                                                .setError("MethodArgumentNotValidException").setFields(fields)
+                                                .setMessage("Falha na validação do(s) campo(s)").build());
         }
 
         @Override
         protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
                         HttpHeaders headers, HttpStatus status, WebRequest request) {
                 return ResponseEntity.badRequest()
-                                .body(ErrorDto.builder()
-                                                .path(((ServletWebRequest) request).getRequest().getRequestURI())
-                                                .status(status.value()).error("HttpMessageNotReadableException")
-                                                .message(getBundleMessage("error.invalid.json")).build());
+                                .body(new ErrorBuilder(status.value())
+                                                .setPath(((ServletWebRequest) request).getRequest().getRequestURI())
+                                                .setError("HttpMessageNotReadableException")
+                                                .setMessage(getBundleMessage("error.invalid.json")).build());
         }
 
         private static String getBundleMessage(String code) {

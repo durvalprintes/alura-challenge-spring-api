@@ -7,11 +7,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.alura.challenge.spring.api.dto.VideoDto;
 import br.com.alura.challenge.spring.api.entity.Video;
 import br.com.alura.challenge.spring.api.exception.ResourceNotFoundException;
+import br.com.alura.challenge.spring.api.projection.dto.VideoDto;
+import br.com.alura.challenge.spring.api.projection.view.VideoView;
 import br.com.alura.challenge.spring.api.repository.VideoRepository;
-import br.com.alura.challenge.spring.api.view.VideoView;
 
 @Service
 public class VideoService {

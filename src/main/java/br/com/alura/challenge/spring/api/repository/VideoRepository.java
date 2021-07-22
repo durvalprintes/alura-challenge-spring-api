@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import br.com.alura.challenge.spring.api.projection.view.VideoView;
 import br.com.alura.challenge.spring.api.entity.Video;
-import br.com.alura.challenge.spring.api.view.VideoView;
 
 @Repository
 public interface VideoRepository extends JpaRepository<Video, String> {

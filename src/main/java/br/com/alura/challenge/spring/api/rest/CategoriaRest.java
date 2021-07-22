@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.alura.challenge.spring.api.dto.CategoriaDto;
+import br.com.alura.challenge.spring.api.projection.view.CategoriaView;
 import br.com.alura.challenge.spring.api.entity.Categoria;
 import br.com.alura.challenge.spring.api.exception.ResourceNotFoundException;
+import br.com.alura.challenge.spring.api.projection.dto.CategoriaDto;
 import br.com.alura.challenge.spring.api.service.CategoriaService;
-import br.com.alura.challenge.spring.api.view.CategoriaView;
 
 @RestController
 @RequestMapping(value = "/categorias", produces = "application/json")

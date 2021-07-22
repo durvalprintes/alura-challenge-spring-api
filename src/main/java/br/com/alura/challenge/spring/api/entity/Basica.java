@@ -8,19 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-@AllArgsConstructor
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class Base {
+public class Basica {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -28,12 +25,23 @@ public class Base {
     @Column(name = "id", updatable = false, nullable = false, length = 255)
     private String id;
 
+    @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss")
     @Column(nullable = false, updatable = false)
     @CreatedDate
     private LocalDateTime dataCriacao;
 
+    @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss")
     @LastModifiedDate
     private LocalDateTime dataModificacao;
+
+    public Basica() {
+    }
+
+    public Basica(String id, LocalDateTime dataCriacao, LocalDateTime dataModificacao) {
+        this.id = id;
+        this.dataCriacao = dataCriacao;
+        this.dataModificacao = dataModificacao;
+    }
 
     public String getId() {
         return id;

@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.alura.challenge.spring.api.dto.VideoDto;
+import br.com.alura.challenge.spring.api.projection.view.VideoView;
 import br.com.alura.challenge.spring.api.entity.Video;
 import br.com.alura.challenge.spring.api.exception.ResourceNotFoundException;
+import br.com.alura.challenge.spring.api.projection.dto.VideoDto;
 import br.com.alura.challenge.spring.api.service.VideoService;
-import br.com.alura.challenge.spring.api.view.VideoView;
 
 @RestController
 @RequestMapping(value = "/videos", produces = "application/json")

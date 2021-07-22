@@ -7,11 +7,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.alura.challenge.spring.api.dto.CategoriaDto;
+import br.com.alura.challenge.spring.api.projection.view.CategoriaView;
 import br.com.alura.challenge.spring.api.entity.Categoria;
 import br.com.alura.challenge.spring.api.exception.ResourceNotFoundException;
+import br.com.alura.challenge.spring.api.projection.dto.CategoriaDto;
 import br.com.alura.challenge.spring.api.repository.CategoriaRepository;
-import br.com.alura.challenge.spring.api.view.CategoriaView;
 
 @Service
 public class CategoriaService {
@@ -37,7 +37,7 @@ public class CategoriaService {
     }
 
     public Categoria findOne(String id) throws ResourceNotFoundException {
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ERROR_NOTFOUND_CATEGORIA));
+        return repository.findGraphById(id).orElseThrow(() -> new ResourceNotFoundException(ERROR_NOTFOUND_CATEGORIA));
     }
 
     public Categoria findVideos(String id) throws ResourceNotFoundException {

@@ -1,5 +1,7 @@
 package br.com.alura.challenge.spring.api.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,14 +11,9 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "videos")
-public class Video extends Base {
+public class Video extends Basica {
 
     @Column(nullable = false, length = 50)
     private String titulo;
@@ -31,6 +28,19 @@ public class Video extends Base {
     @JsonIgnoreProperties("videos")
     @JoinColumn(name = "categoria_id", referencedColumnName = "id", nullable = false)
     private Categoria categoria;
+
+    public Video(String id, LocalDateTime dataCriacao, LocalDateTime dataModificacao, String titulo, String descricao,
+            String url, Categoria categoria) {
+        super(id, dataCriacao, dataModificacao);
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.url = url;
+        this.categoria = categoria;
+    }
+
+    public Video() {
+        super();
+    }
 
     public String getTitulo() {
         return titulo;
