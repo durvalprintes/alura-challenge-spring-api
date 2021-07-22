@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.alura.challenge.spring.api.dto.VideoDto;
 import br.com.alura.challenge.spring.api.entity.Video;
-import br.com.alura.challenge.spring.api.exception.EntityNotFoundException;
+import br.com.alura.challenge.spring.api.exception.ResourceNotFoundException;
 import br.com.alura.challenge.spring.api.repository.VideoRepository;
 import br.com.alura.challenge.spring.api.view.VideoView;
 
@@ -22,13 +22,16 @@ public class VideoService {
     @Autowired
     private CategoriaService service;
 
-    public List<VideoView> findAll() {
-        return repository.findAllByOrderByTitulo();
+    public List<VideoView> findAll() throws ResourceNotFoundException {
+        List<VideoView> videos = repository.findAllByOrderByTitulo();
+        if (videos.isEmpty())
+            throw new ResourceNotFoundException("error.notfound.video");
+        return videos;
     }
 
-    public Video findOne(String id) throws EntityNotFoundException {
+    public Video findOne(String id) throws ResourceNotFoundException {
         return repository.getWithCategoriaById(id)
-                .orElseThrow(() -> new EntityNotFoundException("error.notfound.video"));
+                .orElseThrow(() -> new ResourceNotFoundException("error.notfound.video"));
     }
 
     public Video createOrUpdate(VideoDto dto, Optional<String> id) {

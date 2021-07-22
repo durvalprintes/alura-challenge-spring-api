@@ -18,13 +18,13 @@ import lombok.NoArgsConstructor;
 @Table(name = "videos")
 public class Video extends Base {
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 50)
     private String titulo;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 150)
     private String descricao;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 100)
     private String url;
 
     @ManyToOne(fetch = FetchType.LAZY)

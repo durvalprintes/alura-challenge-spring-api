@@ -27,11 +27,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         @Autowired
         private MessageSource messsage;
 
-        @ExceptionHandler(EntityNotFoundException.class)
-        public ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex, WebRequest request) {
+        @ExceptionHandler(ResourceNotFoundException.class)
+        public ResponseEntity<Object> handleResourceNotFound(ResourceNotFoundException ex, WebRequest request) {
                 return new ResponseEntity<>(
                                 ErrorDto.builder().path(((ServletWebRequest) request).getRequest().getRequestURI())
-                                                .status(HttpStatus.NOT_FOUND.value()).error("EntityNotFoundException")
+                                                .status(HttpStatus.NOT_FOUND.value()).error("ResourceNotFoundException")
                                                 .message(getBundleMessage(ex.getMessage())).build(),
                                 HttpStatus.NOT_FOUND);
         }

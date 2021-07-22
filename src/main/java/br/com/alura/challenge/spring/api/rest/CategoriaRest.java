@@ -20,7 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.alura.challenge.spring.api.dto.CategoriaDto;
 import br.com.alura.challenge.spring.api.entity.Categoria;
-import br.com.alura.challenge.spring.api.exception.EntityNotFoundException;
+import br.com.alura.challenge.spring.api.exception.ResourceNotFoundException;
 import br.com.alura.challenge.spring.api.service.CategoriaService;
 import br.com.alura.challenge.spring.api.view.CategoriaView;
 
@@ -32,10 +32,8 @@ public class CategoriaRest {
     private CategoriaService service;
 
     @GetMapping
-    public ResponseEntity<List<CategoriaView>> getAll() {
+    public ResponseEntity<List<CategoriaView>> getAll() throws ResourceNotFoundException {
         List<CategoriaView> categorias = service.findAll();
-        if (categorias.isEmpty())
-            return ResponseEntity.notFound().build();
         return ResponseEntity.ok(categorias);
     }
 
@@ -48,29 +46,27 @@ public class CategoriaRest {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> getOne(@PathVariable String id) throws EntityNotFoundException {
+    public ResponseEntity<Categoria> getOne(@PathVariable String id) throws ResourceNotFoundException {
         return ResponseEntity.ok(service.findOne(id));
     }
 
     @GetMapping("/{id}/videos")
-    public ResponseEntity<Categoria> getVideos(@PathVariable String id) {
+    public ResponseEntity<Categoria> getVideos(@PathVariable String id) throws ResourceNotFoundException {
         Categoria categoria = service.findVideos(id);
-        if (categoria.getVideos().isEmpty())
-            return ResponseEntity.notFound().build();
         return ResponseEntity.ok(categoria);
     }
 
     @Transactional
     @PutMapping("/{id}")
     public ResponseEntity<CategoriaDto> update(@RequestBody @Valid CategoriaDto dto, @PathVariable String id)
-            throws EntityNotFoundException {
+            throws ResourceNotFoundException {
         service.createOrUpdate(dto, Optional.ofNullable(id));
         return ResponseEntity.ok(dto);
     }
 
     @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable String id) throws EntityNotFoundException {
+    public ResponseEntity<Object> delete(@PathVariable String id) throws ResourceNotFoundException {
         service.remove(id);
         return ResponseEntity.noContent().build();
     }

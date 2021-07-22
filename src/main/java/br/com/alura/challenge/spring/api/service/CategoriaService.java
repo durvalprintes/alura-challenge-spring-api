@@ -9,18 +9,23 @@ import org.springframework.stereotype.Service;
 
 import br.com.alura.challenge.spring.api.dto.CategoriaDto;
 import br.com.alura.challenge.spring.api.entity.Categoria;
-import br.com.alura.challenge.spring.api.exception.EntityNotFoundException;
+import br.com.alura.challenge.spring.api.exception.ResourceNotFoundException;
 import br.com.alura.challenge.spring.api.repository.CategoriaRepository;
 import br.com.alura.challenge.spring.api.view.CategoriaView;
 
 @Service
 public class CategoriaService {
 
+    private static final String ERROR_NOTFOUND_CATEGORIA = "error.notfound.categoria";
+
     @Autowired
     private CategoriaRepository repository;
 
     public List<CategoriaView> findAll() {
-        return repository.findAllByOrderByDescricao();
+        List<CategoriaView> categorias = repository.findAllByOrderByDescricao();
+        if (categorias.isEmpty())
+            throw new ResourceNotFoundException(ERROR_NOTFOUND_CATEGORIA);
+        return categorias;
     }
 
     public Categoria createOrUpdate(CategoriaDto dto, Optional<String> id) {
@@ -31,12 +36,16 @@ public class CategoriaService {
         return repository.save(categoria);
     }
 
-    public Categoria findOne(String id) throws EntityNotFoundException {
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("error.notfound.categoria"));
+    public Categoria findOne(String id) throws ResourceNotFoundException {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ERROR_NOTFOUND_CATEGORIA));
     }
 
-    public Categoria findVideos(String id) {
-        return repository.getVideosById(id).orElseThrow(() -> new EntityNotFoundException("error.notfound.categoria"));
+    public Categoria findVideos(String id) throws ResourceNotFoundException {
+        Categoria categoria = repository.getVideosById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ERROR_NOTFOUND_CATEGORIA));
+        if (categoria.getVideos().isEmpty())
+            throw new ResourceNotFoundException("error.notfound.video");
+        return categoria;
     }
 
     public void remove(String id) {

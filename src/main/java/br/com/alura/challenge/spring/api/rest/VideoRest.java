@@ -3,6 +3,7 @@ package br.com.alura.challenge.spring.api.rest;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -20,7 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.alura.challenge.spring.api.dto.VideoDto;
 import br.com.alura.challenge.spring.api.entity.Video;
-import br.com.alura.challenge.spring.api.exception.EntityNotFoundException;
+import br.com.alura.challenge.spring.api.exception.ResourceNotFoundException;
 import br.com.alura.challenge.spring.api.service.VideoService;
 import br.com.alura.challenge.spring.api.view.VideoView;
 
@@ -32,12 +33,9 @@ public class VideoRest {
     private VideoService service;
 
     @GetMapping
-    public ResponseEntity<List<VideoView>> getAll() {
+    public ResponseEntity<List<VideoView>> getAll() throws ResourceNotFoundException {
         List<VideoView> videos = service.findAll();
-        if (videos.isEmpty())
-            return ResponseEntity.notFound().build();
         return ResponseEntity.ok(videos);
-
     }
 
     @PostMapping
@@ -50,7 +48,7 @@ public class VideoRest {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Video> getOne(@PathVariable String id) throws EntityNotFoundException {
+    public ResponseEntity<Video> getOne(@PathVariable String id) throws ResourceNotFoundException {
         return ResponseEntity.ok(service.findOne(id));
     }
 
@@ -64,7 +62,7 @@ public class VideoRest {
 
     @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable String id) throws EntityNotFoundException {
+    public ResponseEntity<Object> delete(@PathVariable String id) throws ResourceNotFoundException {
         service.remove(id);
         return ResponseEntity.noContent().build();
     }

@@ -3,6 +3,8 @@ package br.com.alura.challenge.spring.api.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.URL;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,15 +15,16 @@ import lombok.NoArgsConstructor;
 public class VideoDto {
 
     @NotBlank
-    @Size(min = 1, max = 30)
+    @Size(min = 1, max = 50)
     private String titulo;
 
     @NotBlank
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 150)
     private String descricao;
 
     @NotBlank
-    @Size(min = 1, max = 50)
+    @URL
+    @Size(min = 1, max = 100)
     private String url;
 
     @NotBlank
