@@ -1,7 +1,6 @@
 # Spring Boot API
 
 API RESTful com Spring Boot, resultado do Desafio da Alura com foco em tecnologias para Back-end.
-#alurachallengeback 
 
 ## Pré-requisitos
 
@@ -18,9 +17,11 @@ API RESTful com Spring Boot, resultado do Desafio da Alura com foco em tecnologi
 - [ ] Conteinerização;
 - [ ] Testes;
 - [ ] Autenticação e autorização;
+- [ ] Deploy;
 - [ ] Gerenciamento e monitoramento;
 
 ## Recursos utilizados
 
 - Documentação com o [Swagger](https://swagger.io/);
 - Conteinerização com o [Docker](https://www.docker.com/);
+- Deploy com [Heroku](https://www.heroku.com/);
