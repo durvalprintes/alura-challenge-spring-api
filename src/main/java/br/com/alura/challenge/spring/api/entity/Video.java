@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "videos")
-public class Video extends Basica {
+public class Video extends Padrao {
 
     @Column(nullable = false, length = 50)
     private String titulo;
@@ -24,8 +24,8 @@ public class Video extends Basica {
     @Column(nullable = false, length = 100)
     private String url;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("videos")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "categoria_id", referencedColumnName = "id", nullable = false)
     private Categoria categoria;
 

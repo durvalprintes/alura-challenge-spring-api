@@ -1,8 +1,6 @@
 package br.com.alura.challenge.spring.api.projection.view;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public interface VideoView {
+public interface VideoView extends DataView {
 
     String getId();
 
@@ -12,7 +10,5 @@ public interface VideoView {
 
     String getUrl();
 
-    @JsonProperty(value = "categoria")
-    String getCategoriaDescricao();
-
+    CategoriaView getCategoria();
 }

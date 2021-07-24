@@ -1,5 +1,6 @@
 package br.com.alura.challenge.spring.api.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -17,7 +18,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class Basica {
+public class Padrao implements Serializable {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -31,13 +32,14 @@ public class Basica {
     private LocalDateTime dataCriacao;
 
     @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss")
+    @Column(nullable = false)
     @LastModifiedDate
     private LocalDateTime dataModificacao;
 
-    public Basica() {
+    public Padrao() {
     }
 
-    public Basica(String id, LocalDateTime dataCriacao, LocalDateTime dataModificacao) {
+    public Padrao(String id, LocalDateTime dataCriacao, LocalDateTime dataModificacao) {
         this.id = id;
         this.dataCriacao = dataCriacao;
         this.dataModificacao = dataModificacao;

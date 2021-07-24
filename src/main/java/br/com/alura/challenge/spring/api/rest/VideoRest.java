@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.alura.challenge.spring.api.projection.view.VideoView;
+import br.com.alura.challenge.spring.api.projection.view.VideoListView;
 import br.com.alura.challenge.spring.api.entity.Video;
 import br.com.alura.challenge.spring.api.exception.ResourceNotFoundException;
 import br.com.alura.challenge.spring.api.projection.dto.VideoDto;
@@ -33,14 +33,14 @@ public class VideoRest {
     private VideoService service;
 
     @GetMapping
-    public ResponseEntity<List<VideoView>> getAll() throws ResourceNotFoundException {
-        List<VideoView> videos = service.findAll();
+    public ResponseEntity<Object> getAll() throws ResourceNotFoundException {
+        List<VideoListView> videos = service.findAll();
         return ResponseEntity.ok(videos);
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity<VideoDto> create(@RequestBody @Valid VideoDto dto) {
+    public ResponseEntity<Object> create(@RequestBody @Valid VideoDto dto) {
         Video video = service.createOrUpdate(dto, Optional.ofNullable(null));
         return ResponseEntity.created(
                 ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(video.getId()).toUri())
@@ -48,13 +48,13 @@ public class VideoRest {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Video> getOne(@PathVariable String id) throws ResourceNotFoundException {
-        return ResponseEntity.ok(service.findOne(id));
+    public ResponseEntity<Object> getOne(@PathVariable String id) throws ResourceNotFoundException {
+        return ResponseEntity.ok(service.findVideo(id));
     }
 
     @Transactional
     @PutMapping("/{id}")
-    public ResponseEntity<VideoDto> update(@RequestBody @Valid VideoDto dto, @PathVariable String id)
+    public ResponseEntity<Object> update(@RequestBody @Valid VideoDto dto, @PathVariable String id)
             throws EntityNotFoundException {
         service.createOrUpdate(dto, Optional.ofNullable(id));
         return ResponseEntity.ok(dto);

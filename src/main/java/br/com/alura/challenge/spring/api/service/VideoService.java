@@ -10,11 +10,14 @@ import org.springframework.stereotype.Service;
 import br.com.alura.challenge.spring.api.entity.Video;
 import br.com.alura.challenge.spring.api.exception.ResourceNotFoundException;
 import br.com.alura.challenge.spring.api.projection.dto.VideoDto;
+import br.com.alura.challenge.spring.api.projection.view.VideoListView;
 import br.com.alura.challenge.spring.api.projection.view.VideoView;
 import br.com.alura.challenge.spring.api.repository.VideoRepository;
 
 @Service
 public class VideoService {
+
+    private static final String ERROR_NOTFOUND_VIDEO = "error.notfound.video";
 
     @Autowired
     private VideoRepository repository;
@@ -22,16 +25,16 @@ public class VideoService {
     @Autowired
     private CategoriaService service;
 
-    public List<VideoView> findAll() throws ResourceNotFoundException {
-        List<VideoView> videos = repository.findAllByOrderByTitulo();
+    public List<VideoListView> findAll() throws ResourceNotFoundException {
+        List<VideoListView> videos = repository.findAllByOrderByTitulo();
         if (videos.isEmpty())
-            throw new ResourceNotFoundException("error.notfound.video");
+            throw new ResourceNotFoundException(ERROR_NOTFOUND_VIDEO);
         return videos;
     }
 
-    public Video findOne(String id) throws ResourceNotFoundException {
+    public VideoView findVideo(String id) throws ResourceNotFoundException {
         return repository.getWithCategoriaById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("error.notfound.video"));
+                .orElseThrow(() -> new ResourceNotFoundException(ERROR_NOTFOUND_VIDEO));
     }
 
     public Video createOrUpdate(VideoDto dto, Optional<String> id) {
@@ -47,4 +50,7 @@ public class VideoService {
         repository.delete(findOne(id));
     }
 
+    private Video findOne(String id) throws ResourceNotFoundException {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ERROR_NOTFOUND_VIDEO));
+    }
 }

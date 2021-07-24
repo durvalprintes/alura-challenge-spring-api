@@ -18,10 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.alura.challenge.spring.api.projection.view.CategoriaView;
 import br.com.alura.challenge.spring.api.entity.Categoria;
 import br.com.alura.challenge.spring.api.exception.ResourceNotFoundException;
 import br.com.alura.challenge.spring.api.projection.dto.CategoriaDto;
+import br.com.alura.challenge.spring.api.projection.view.CategoriaListView;
+import br.com.alura.challenge.spring.api.projection.view.CategoriaView;
 import br.com.alura.challenge.spring.api.service.CategoriaService;
 
 @RestController
@@ -32,33 +33,33 @@ public class CategoriaRest {
     private CategoriaService service;
 
     @GetMapping
-    public ResponseEntity<List<CategoriaView>> getAll() throws ResourceNotFoundException {
-        List<CategoriaView> categorias = service.findAll();
+    public ResponseEntity<Object> getAll() throws ResourceNotFoundException {
+        List<CategoriaListView> categorias = service.findAll();
         return ResponseEntity.ok(categorias);
     }
 
     @Transactional
     @PostMapping
-    public ResponseEntity<CategoriaDto> create(@RequestBody @Valid CategoriaDto dto) {
+    public ResponseEntity<Object> create(@RequestBody @Valid CategoriaDto dto) {
         Categoria categoria = service.createOrUpdate(dto, Optional.ofNullable(null));
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(categoria.getId()).toUri()).body(dto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> getOne(@PathVariable String id) throws ResourceNotFoundException {
-        return ResponseEntity.ok(service.findOne(id));
+    public ResponseEntity<Object> getOne(@PathVariable String id) throws ResourceNotFoundException {
+        CategoriaView view = service.findCategoria(id);
+        return ResponseEntity.ok(view);
     }
 
     @GetMapping("/{id}/videos")
-    public ResponseEntity<Categoria> getVideos(@PathVariable String id) throws ResourceNotFoundException {
-        Categoria categoria = service.findVideos(id);
-        return ResponseEntity.ok(categoria);
+    public ResponseEntity<Object> getVideos(@PathVariable String id) throws ResourceNotFoundException {
+        return ResponseEntity.ok(service.findVideos(id));
     }
 
     @Transactional
     @PutMapping("/{id}")
-    public ResponseEntity<CategoriaDto> update(@RequestBody @Valid CategoriaDto dto, @PathVariable String id)
+    public ResponseEntity<Object> update(@RequestBody @Valid CategoriaDto dto, @PathVariable String id)
             throws ResourceNotFoundException {
         service.createOrUpdate(dto, Optional.ofNullable(id));
         return ResponseEntity.ok(dto);

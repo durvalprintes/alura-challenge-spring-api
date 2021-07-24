@@ -7,10 +7,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.alura.challenge.spring.api.projection.view.CategoriaView;
 import br.com.alura.challenge.spring.api.entity.Categoria;
 import br.com.alura.challenge.spring.api.exception.ResourceNotFoundException;
 import br.com.alura.challenge.spring.api.projection.dto.CategoriaDto;
+import br.com.alura.challenge.spring.api.projection.view.CategoriaAndVideosView;
+import br.com.alura.challenge.spring.api.projection.view.CategoriaListView;
+import br.com.alura.challenge.spring.api.projection.view.CategoriaView;
 import br.com.alura.challenge.spring.api.repository.CategoriaRepository;
 
 @Service
@@ -21,11 +23,15 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository repository;
 
-    public List<CategoriaView> findAll() {
-        List<CategoriaView> categorias = repository.findAllByOrderByDescricao();
+    public List<CategoriaListView> findAll() {
+        List<CategoriaListView> categorias = repository.findAllByOrderByDescricao();
         if (categorias.isEmpty())
             throw new ResourceNotFoundException(ERROR_NOTFOUND_CATEGORIA);
         return categorias;
+    }
+
+    public Categoria findOne(String id) throws ResourceNotFoundException {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ERROR_NOTFOUND_CATEGORIA));
     }
 
     public Categoria createOrUpdate(CategoriaDto dto, Optional<String> id) {
@@ -36,12 +42,13 @@ public class CategoriaService {
         return repository.save(categoria);
     }
 
-    public Categoria findOne(String id) throws ResourceNotFoundException {
-        return repository.findGraphById(id).orElseThrow(() -> new ResourceNotFoundException(ERROR_NOTFOUND_CATEGORIA));
+    public CategoriaView findCategoria(String id) throws ResourceNotFoundException {
+        return repository.getCategoriaById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ERROR_NOTFOUND_CATEGORIA));
     }
 
-    public Categoria findVideos(String id) throws ResourceNotFoundException {
-        Categoria categoria = repository.getVideosById(id)
+    public CategoriaAndVideosView findVideos(String id) throws ResourceNotFoundException {
+        CategoriaAndVideosView categoria = repository.getVideosById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ERROR_NOTFOUND_CATEGORIA));
         if (categoria.getVideos().isEmpty())
             throw new ResourceNotFoundException("error.notfound.video");
@@ -51,5 +58,4 @@ public class CategoriaService {
     public void remove(String id) {
         repository.delete(findOne(id));
     }
-
 }

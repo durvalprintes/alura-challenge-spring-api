@@ -1,9 +1,13 @@
 package br.com.alura.challenge.spring.api.projection.view;
 
-public interface CategoriaView extends DataView {
+public interface VideoWithoutCategoriaView {
 
     String getId();
 
+    String getTitulo();
+
     String getDescricao();
+
+    String getUrl();
 
 }
