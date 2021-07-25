@@ -14,7 +14,7 @@ API RESTful com Spring Boot, resultado do Desafio da Alura com foco em tecnologi
 - [x] Tratamento de Exceções;
 - [x] Validações na entrada de dados;
 - [x] Documentação;
-- [ ] Conteinerização;
+- [x] Conteinerização;
 - [ ] Testes;
 - [ ] Autenticação e autorização;
 - [ ] Deploy;

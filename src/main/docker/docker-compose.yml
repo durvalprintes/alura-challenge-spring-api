@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  app:
+    image: "alura-challenge-backend-api:latest"
+    build:
+      context: .
+    container_name: spring-java-8
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/challenges?currentSchema=backend
+      - SPRING_DATASOURCE_USERNAME=alura
+      - SPRING_DATASOURCE_PASSWORD=alura
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - 8080:8080
+  db:
+    image: "postgres:13.3-alpine"
+    restart: always
+    container_name: postgres-alpine
+    environment:
+      - POSTGRES_USER=alura
+      - POSTGRES_PASSWORD=alura
+      - POSTGRES_DB=challenges
+    ports:
+      - 5432:5432
