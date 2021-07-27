@@ -4,6 +4,8 @@ public interface CategoriaListView {
 
     String getId();
 
-    String getDescricao();
+    String getTitulo();
+
+    String getCor();
 
 }

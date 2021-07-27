@@ -1,9 +1,10 @@
 package br.com.alura.challenge.spring.api.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,9 +19,9 @@ import br.com.alura.challenge.spring.api.projection.view.CategoriaView;
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, String> {
 
-    List<CategoriaListView> findAllByOrderByDescricao();
+    Page<CategoriaListView> findAllByOrderByTitulo(Pageable pageable);
 
-    boolean existsByDescricaoIgnoreCase(String descricao);
+    boolean existsByTituloIgnoreCase(String descricao);
 
     @Query("select c from Categoria c WHERE c.id = :id")
     Optional<CategoriaView> getCategoriaById(@Param("id") String id);

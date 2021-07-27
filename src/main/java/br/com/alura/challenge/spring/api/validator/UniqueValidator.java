@@ -19,7 +19,7 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
 
     @Override
     public boolean isValid(String descricao, ConstraintValidatorContext context) {
-        return !repository.existsByDescricaoIgnoreCase(descricao);
+        return !repository.existsByTituloIgnoreCase(descricao);
     }
 
 }

@@ -25,8 +25,8 @@ public class Video extends Padrao {
     private String url;
 
     @JsonIgnoreProperties("videos")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "categoria_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;
 
     public Video(String id, LocalDateTime dataCriacao, LocalDateTime dataModificacao, String titulo, String descricao,

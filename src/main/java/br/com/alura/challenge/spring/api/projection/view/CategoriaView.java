@@ -4,6 +4,8 @@ public interface CategoriaView extends DataView {
 
     String getId();
 
-    String getDescricao();
+    String getTitulo();
+
+    String getCor();
 
 }
