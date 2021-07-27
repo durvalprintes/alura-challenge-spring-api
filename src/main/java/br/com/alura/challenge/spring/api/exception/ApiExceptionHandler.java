@@ -36,6 +36,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                                 HttpStatus.NOT_FOUND);
         }
 
+        @ExceptionHandler(BusinessException.class)
+        public ResponseEntity<Object> handleBusiness(BusinessException ex, WebRequest request) {
+                return new ResponseEntity<>(new ErrorBuilder(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                                .setPath(((ServletWebRequest) request).getRequest().getRequestURI())
+                                .setError("BusinessException").setMessage(getBundleMessage(ex.getMessage())).build(),
+                                HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
         @Override
         public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                         HttpHeaders headers, HttpStatus status, WebRequest request) {
