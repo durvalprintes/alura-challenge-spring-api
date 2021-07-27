@@ -1,4 +1,4 @@
-package br.com.alura.challenge.spring.api.swagger;
+package br.com.alura.challenge.spring.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ public class SwaggerConfiguration {
 
     private ApiInfo info() {
         return new ApiInfoBuilder().title("Alura Challenge #2 - Back-End").description("API REST com Spring Boot")
-                .version("0.0.1").contact(new Contact("Durval Printes",
+                .version("0.0.2").contact(new Contact("Durval Printes",
                         "https://www.linkedin.com/in/durval-printes-51880359/", "durvalprintes@gmail.com"))
                 .build();
     }

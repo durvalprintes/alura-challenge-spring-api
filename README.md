@@ -5,33 +5,40 @@ API RESTful com Spring Boot, resultado do Desafio da Alura com foco em tecnologi
 ## Pré-requisitos
 
 1. Conhecimento em Java, Spring Boot e suas dependências;
-2. Instalar o *docker* e o *docker-compose* no seu sistema operacional;
+2. Instalar o _docker_ e o _docker-compose_ no seu sistema operacional;
 
 ## Execução
 
 1. Build do projeto:
+
 ```bash
 .\mvnw clean package
 ```
+
 2. Copie o artefato **spring-api.jar** para o diretorio **/src/main/docker**;
 3. No diretório acima:
+
 ```bash
-docker-compose build 
+docker-compose build
 ```
+
 e
+
 ```bash
-docker-compose up 
+docker-compose up
 ```
+
 4. Caso queira remover os contêineres:
+
 ```bash
-docker-compose down 
+docker-compose down
 ```
 
 ## Especificações em Desenvolvimento
 
 - [x] Conexao com o banco de dados Postgres;
-- [x] Duas Entidades com relacionamento bidirecional;
-- [x] Endpoints com CRUD básico completo;
+- [x] Duas entidades com relacionamento bidirecional;
+- [x] Endpoints com CRUD completo;
 - [x] Tratamento de Exceções;
 - [x] Validações na entrada de dados;
 - [x] Documentação;

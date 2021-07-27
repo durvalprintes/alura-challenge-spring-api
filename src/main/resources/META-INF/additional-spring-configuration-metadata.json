@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "categoria.livre",
+  "type": "java.lang.String",
+  "description": "Id da Categoria de titulo LIVRE"
+}]}
