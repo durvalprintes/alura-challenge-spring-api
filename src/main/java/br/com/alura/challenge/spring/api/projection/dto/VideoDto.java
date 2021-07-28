@@ -24,7 +24,7 @@ public class VideoDto {
     @Size(min = 1, max = 100, groups = { VideoCreateValidator.class, VideoUpdateValidator.class })
     private String url;
 
-    private String categoriaId = "e70f5663-60d7-40ed-8920-8ac62f9fe701";
+    private String categoriaId;
 
     public VideoDto() {
     }

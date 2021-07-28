@@ -45,10 +45,14 @@ public class CategoriaService {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ERROR_NOTFOUND_CATEGORIA));
     }
 
-    public Categoria createOrUpdate(CategoriaDto dto, Optional<String> id) throws ResourceNotFoundException {
+    public Categoria createOrUpdate(CategoriaDto dto, Optional<String> id)
+            throws BusinessException, ResourceNotFoundException {
         Categoria categoria = new Categoria();
-        if (id.isPresent())
+        if (id.isPresent()) {
+            if (id.get().equals(categoriaLivre))
+                throw new BusinessException("Categoria Livre é bloqueada para alteração.");
             categoria = findOne(id.get());
+        }
         BeanUtils.copyProperties(dto, categoria, Util.getBlankPropertyNames(dto));
         return repository.save(categoria);
     }
