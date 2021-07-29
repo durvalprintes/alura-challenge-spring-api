@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.alura.challenge.spring.api.entity.Categoria;
+import br.com.alura.challenge.spring.api.exception.BusinessException;
 import br.com.alura.challenge.spring.api.exception.ResourceNotFoundException;
 import br.com.alura.challenge.spring.api.projection.dto.CategoriaDto;
 import br.com.alura.challenge.spring.api.projection.view.CategoriaListView;
@@ -45,7 +46,7 @@ public class CategoriaRest {
     @Transactional
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody @Validated(CategoriaCreateValidator.class) CategoriaDto dto)
-            throws ResourceNotFoundException {
+            throws BusinessException, ResourceNotFoundException {
         Categoria categoria = service.createOrUpdate(dto, Optional.ofNullable(null));
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(categoria.getId()).toUri()).body(dto);
@@ -66,13 +67,13 @@ public class CategoriaRest {
     @Transactional
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@RequestBody @Validated(CategoriaUpdateValidator.class) CategoriaDto dto,
-            @PathVariable String id) throws ResourceNotFoundException {
+            @PathVariable String id) throws BusinessException, ResourceNotFoundException {
         return ResponseEntity.ok(new CategoriaDto(service.createOrUpdate(dto, Optional.ofNullable(id))));
     }
 
     @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable String id) throws ResourceNotFoundException {
+    public ResponseEntity<Object> delete(@PathVariable String id) throws BusinessException, ResourceNotFoundException {
         service.remove(id);
         return ResponseEntity.noContent().build();
     }

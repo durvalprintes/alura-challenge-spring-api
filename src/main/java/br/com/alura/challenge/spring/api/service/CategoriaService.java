@@ -41,10 +41,6 @@ public class CategoriaService {
         return categorias;
     }
 
-    public Categoria findOne(String id) throws ResourceNotFoundException {
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ERROR_NOTFOUND_CATEGORIA));
-    }
-
     public Categoria createOrUpdate(CategoriaDto dto, Optional<String> id)
             throws BusinessException, ResourceNotFoundException {
         Categoria categoria = new Categoria();
@@ -76,4 +72,9 @@ public class CategoriaService {
         service.updateVideosToCategoriaLivre(id);
         repository.delete(findOne(id));
     }
+
+    public Categoria findOne(String id) throws ResourceNotFoundException {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ERROR_NOTFOUND_CATEGORIA));
+    }
+
 }

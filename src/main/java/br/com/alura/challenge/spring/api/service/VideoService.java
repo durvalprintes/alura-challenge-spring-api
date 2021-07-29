@@ -70,4 +70,5 @@ public class VideoService {
     private Video findOne(String id) throws ResourceNotFoundException {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ERROR_NOTFOUND_VIDEO));
     }
+
 }

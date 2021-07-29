@@ -2,7 +2,6 @@ package br.com.alura.challenge.spring.api.rest;
 
 import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.alura.challenge.spring.api.entity.Video;
+import br.com.alura.challenge.spring.api.exception.BusinessException;
 import br.com.alura.challenge.spring.api.exception.ResourceNotFoundException;
 import br.com.alura.challenge.spring.api.projection.dto.VideoDto;
 import br.com.alura.challenge.spring.api.projection.view.VideoListView;
@@ -46,7 +46,8 @@ public class VideoRest {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Object> create(@RequestBody @Validated(VideoCreateValidator.class) VideoDto dto) {
+    public ResponseEntity<Object> create(@RequestBody @Validated(VideoCreateValidator.class) VideoDto dto)
+            throws BusinessException, ResourceNotFoundException {
         Video video = service.createOrUpdate(dto, Optional.ofNullable(null));
         return ResponseEntity.created(
                 ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(video.getId()).toUri())
@@ -61,14 +62,14 @@ public class VideoRest {
     @Transactional
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@RequestBody @Validated(VideoUpdateValidator.class) VideoDto dto,
-            @PathVariable String id) throws EntityNotFoundException {
+            @PathVariable String id) throws BusinessException, ResourceNotFoundException {
 
         return ResponseEntity.ok(new VideoDto(service.createOrUpdate(dto, Optional.ofNullable(id))));
     }
 
     @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable String id) throws ResourceNotFoundException {
+    public ResponseEntity<Object> delete(@PathVariable String id) throws BusinessException, ResourceNotFoundException {
         service.remove(id);
         return ResponseEntity.noContent().build();
     }
