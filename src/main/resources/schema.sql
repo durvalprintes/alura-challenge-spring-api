@@ -1,1 +1,10 @@
 CREATE SCHEMA IF NOT EXISTS backend AUTHORIZATION alura;
+
+CREATE TABLE backend.categorias (
+	id VARCHAR(255) NOT NULL,
+	data_criacao TIMESTAMP NOT NULL,
+	data_modificacao TIMESTAMP NOT NULL,
+	cor VARCHAR(7) NOT NULL,
+	titulo VARCHAR(100) NOT NULL,
+	CONSTRAINT categorias_pkey PRIMARY KEY (id)
+);

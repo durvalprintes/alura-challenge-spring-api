@@ -1,0 +1,5 @@
+FROM  openjdk:8-jdk-alpine
+LABEL Author="DURVAL PRINTES"
+ARG JAR_FILE=*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT java -jar app.jar
