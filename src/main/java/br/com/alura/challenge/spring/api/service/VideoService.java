@@ -1,8 +1,6 @@
 package br.com.alura.challenge.spring.api.service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +29,7 @@ public class VideoService {
     private VideoRepository repository;
 
     @Autowired
-    private CategoriaService service;
+    private CategoriaService categoria;
 
     public Page<VideoListView> findAll(String titulo, Pageable pageable) throws ResourceNotFoundException {
         Page<VideoListView> videos = repository.findByTituloIgnoreCaseContainingOrderByTitulo(titulo, pageable);
@@ -51,16 +49,8 @@ public class VideoService {
             video = findOne(id.get());
         BeanUtils.copyProperties(dto, video, Util.getBlankPropertyNames(dto));
         video.setCategoria(
-                service.findOne(dto.getCategoriaId().trim().length() > 0 ? dto.getCategoriaId() : categoriaLivre));
+                categoria.findOne(dto.getCategoriaId().trim().length() > 0 ? dto.getCategoriaId() : categoriaLivre));
         return repository.save(video);
-    }
-
-    public void updateVideosToCategoriaLivre(String id) {
-        List<Video> videos = repository.findAll().stream().filter(video -> video.getCategoria().getId().equals(id))
-                .collect(Collectors.toList());
-        videos.forEach(video -> video.setCategoria(service.findOne(categoriaLivre)));
-        if (!videos.isEmpty())
-            repository.saveAll(videos);
     }
 
     public void remove(String id) throws ResourceNotFoundException {
