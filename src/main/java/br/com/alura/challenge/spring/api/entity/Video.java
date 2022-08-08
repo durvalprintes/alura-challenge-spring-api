@@ -24,17 +24,21 @@ public class Video extends Padrao {
     @Column(nullable = false, length = 100)
     private String url;
 
+    @Column(name = "thumbnail_url", nullable = true, length = 100)
+    private String thumbnailUrl;
+
     @JsonIgnoreProperties("videos")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;
 
     public Video(String id, LocalDateTime dataCriacao, LocalDateTime dataModificacao, String titulo, String descricao,
-            String url, Categoria categoria) {
+            String url, String thumbnailUrl, Categoria categoria) {
         super(id, dataCriacao, dataModificacao);
         this.titulo = titulo;
         this.descricao = descricao;
         this.url = url;
+        this.thumbnailUrl = thumbnailUrl;
         this.categoria = categoria;
     }
 
@@ -64,6 +68,14 @@ public class Video extends Padrao {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
     }
 
     public Categoria getCategoria() {

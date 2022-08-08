@@ -10,6 +10,8 @@ public interface VideoListView {
 
     String getUrl();
 
+    String getThumbnailUrl();
+
     String getCategoriaId();
 
 }

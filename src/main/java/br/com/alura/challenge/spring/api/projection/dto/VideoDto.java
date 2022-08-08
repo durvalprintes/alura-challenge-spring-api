@@ -24,15 +24,21 @@ public class VideoDto {
     @Size(min = 1, max = 100, groups = { VideoCreateValidator.class, VideoUpdateValidator.class })
     private String url;
 
+    @NotBlank(groups = VideoCreateValidator.class)
+    @URL(groups = { VideoCreateValidator.class, VideoUpdateValidator.class })
+    @Size(min = 1, max = 100, groups = { VideoCreateValidator.class, VideoUpdateValidator.class })
+    private String thumbnailUrl;
+
     private String categoriaId;
 
     public VideoDto() {
     }
 
-    public VideoDto(String titulo, String descricao, String url, String categoriaId) {
+    public VideoDto(String titulo, String descricao, String url, String thumbnailUrl, String categoriaId) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.url = url;
+        this.thumbnailUrl = thumbnailUrl;
         this.categoriaId = categoriaId;
     }
 
@@ -40,6 +46,7 @@ public class VideoDto {
         this.titulo = video.getTitulo();
         this.descricao = video.getDescricao();
         this.url = video.getUrl();
+        this.thumbnailUrl = video.getThumbnailUrl();
         this.categoriaId = video.getCategoria().getId();
     }
 
@@ -53,6 +60,10 @@ public class VideoDto {
 
     public String getUrl() {
         return url;
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
     }
 
     public String getCategoriaId() {

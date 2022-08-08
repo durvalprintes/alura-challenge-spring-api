@@ -138,6 +138,10 @@ class CategoriaServiceTests {
 				public String getUrl() {
 					return "https://www.google.com/";
 				}
+
+				public String getThumbnailUrl() {
+					return "https://www.google.com/";
+				}
 			});
 		}
 	};

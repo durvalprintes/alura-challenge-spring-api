@@ -10,4 +10,6 @@ public interface VideoWithoutCategoriaView {
 
     String getUrl();
 
+    String getThumbnailUrl();
+
 }
