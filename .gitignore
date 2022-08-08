@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### DOCKER ###
-/src/main/docker/*.jar
+/docker/*.jar

@@ -1,1 +1,0 @@
-insert into categorias (id, titulo, cor, data_criacao, data_modificacao) values ('e70f5663-60d7-40ed-8920-8ac62f9fe701', 'LIVRE', '#FFFFFF',  now(), now());

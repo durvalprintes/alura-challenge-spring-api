@@ -15,8 +15,8 @@ API RESTful com Spring Boot, resultado do Desafio da Alura com foco em tecnologi
 .\mvnw clean package
 ```
 
-2. Copie o artefato **spring-api.jar** para o diretorio **/src/main/docker**;
-3. No diretório acima:
+2. ~~Copie o artefato **spring-api.jar** para o diretorio **/docker**~~;
+3. No diretório **/docker**:
 
 ```bash
 docker-compose build
