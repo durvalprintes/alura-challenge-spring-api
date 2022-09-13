@@ -12,4 +12,8 @@ public interface VideoWithoutCategoriaView {
 
     String getThumbnailUrl();
 
+    Long getTotalAprova();
+
+    Long getTotalRejeita();
+
 }

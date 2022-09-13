@@ -12,5 +12,9 @@ public interface VideoView extends DataView {
 
     String getThumbnailUrl();
 
+    Long getTotalAprova();
+
+    Long getTotalRejeita();
+
     CategoriaView getCategoria();
 }

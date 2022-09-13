@@ -12,6 +12,10 @@ public interface VideoListView {
 
     String getThumbnailUrl();
 
+    Long getTotalAprova();
+
+    Long getTotalRejeita();
+
     String getCategoriaId();
 
 }

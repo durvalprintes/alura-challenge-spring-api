@@ -13,15 +13,19 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -32,13 +36,15 @@ import br.com.alura.challenge.spring.api.projection.view.CategoriaListView;
 import br.com.alura.challenge.spring.api.projection.view.CategoriaView;
 import br.com.alura.challenge.spring.api.projection.view.VideoWithoutCategoriaView;
 import br.com.alura.challenge.spring.api.repository.CategoriaRepository;
-import br.com.alura.challenge.spring.api.rest.CategoriaRest;
 import br.com.alura.challenge.spring.api.service.CategoriaService;
 import br.com.alura.challenge.spring.api.service.VideoService;
 import br.com.alura.challenge.spring.api.util.Util;
 
-@WebMvcTest(value = { CategoriaRest.class, CategoriaService.class })
-@AutoConfigureMockMvc(addFilters = false)
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+@Import(value = { CategoriaService.class })
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
 class CategoriaServiceTests {
 
 	@Autowired
@@ -141,6 +147,14 @@ class CategoriaServiceTests {
 
 				public String getThumbnailUrl() {
 					return "https://www.google.com/";
+				}
+
+				public Long getTotalAprova() {
+					return 100L;
+				}
+
+				public Long getTotalRejeita() {
+					return 10L;
 				}
 			});
 		}
