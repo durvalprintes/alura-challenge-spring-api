@@ -43,10 +43,10 @@ public class VideoService {
                 .orElseThrow(() -> new ResourceNotFoundException(ERROR_NOTFOUND_VIDEO));
     }
 
-    public Video createOrUpdate(VideoDto dto, Optional<String> id) {
+    public Video createOrUpdate(VideoDto dto, String id) {
         Video video = new Video();
-        if (id.isPresent())
-            video = findOne(id.get());
+        if (Optional.ofNullable(id).isPresent())
+            video = findOne(id);
         BeanUtils.copyProperties(dto, video, Util.getBlankPropertyNames(dto));
         video.setCategoria(
                 categoria.findOne(dto.getCategoriaId().trim().length() > 0 ? dto.getCategoriaId() : categoriaLivre));

@@ -1,7 +1,5 @@
 package br.com.alura.challenge.spring.api.rest;
 
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +45,7 @@ public class CategoriaRest {
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody @Validated(CategoriaCreateValidator.class) CategoriaDto dto)
             throws BusinessException, ResourceNotFoundException {
-        Categoria categoria = service.createOrUpdate(dto, Optional.ofNullable(null));
+        Categoria categoria = service.createOrUpdate(dto, null);
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(categoria.getId()).toUri()).body(dto);
     }
@@ -68,7 +66,7 @@ public class CategoriaRest {
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@RequestBody @Validated(CategoriaUpdateValidator.class) CategoriaDto dto,
             @PathVariable String id) throws BusinessException, ResourceNotFoundException {
-        return ResponseEntity.ok(new CategoriaDto(service.createOrUpdate(dto, Optional.ofNullable(id))));
+        return ResponseEntity.ok(new CategoriaDto(service.createOrUpdate(dto, id)));
     }
 
     @Transactional

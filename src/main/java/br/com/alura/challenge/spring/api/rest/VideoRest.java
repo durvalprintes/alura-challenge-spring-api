@@ -1,7 +1,5 @@
 package br.com.alura.challenge.spring.api.rest;
 
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +46,7 @@ public class VideoRest {
     @Transactional
     public ResponseEntity<Object> create(@RequestBody @Validated(VideoCreateValidator.class) VideoDto dto)
             throws BusinessException, ResourceNotFoundException {
-        Video video = service.createOrUpdate(dto, Optional.ofNullable(null));
+        Video video = service.createOrUpdate(dto, null);
         return ResponseEntity.created(
                 ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(video.getId()).toUri())
                 .body(dto);
@@ -64,7 +62,7 @@ public class VideoRest {
     public ResponseEntity<Object> update(@RequestBody @Validated(VideoUpdateValidator.class) VideoDto dto,
             @PathVariable String id) throws BusinessException, ResourceNotFoundException {
 
-        return ResponseEntity.ok(new VideoDto(service.createOrUpdate(dto, Optional.ofNullable(id))));
+        return ResponseEntity.ok(new VideoDto(service.createOrUpdate(dto, id)));
     }
 
     @Transactional

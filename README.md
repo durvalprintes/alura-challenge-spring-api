@@ -15,7 +15,7 @@ API RESTful com Spring Boot, resultado do Desafio da Alura com foco em tecnologi
 .\mvnw clean package
 ```
 
-2. ~~Copie o artefato **spring-api.jar** para o diretorio **/docker**~~;
+2. ~~Copie o artefato **spring-api.jar** para o diretório **/docker**~~;
 3. No diretório **/docker**:
 
 ```bash
@@ -36,14 +36,15 @@ docker-compose down
 
 ## Especificações em Desenvolvimento
 
-- [x] Conexao com o banco de dados Postgres;
+- [x] Conexão com o banco de dados Postgres;
 - [x] Duas entidades com relacionamento bidirecional;
 - [x] Endpoints com CRUD completo;
 - [x] Tratamento de Exceções;
 - [x] Validações na entrada de dados;
 - [x] Documentação;
 - [x] Conteinerização;
-- [ ] Testes;
+- [x] Versionamento da Base da Dados;
+- [ ] Refatoração dos testes;
 - [ ] Autenticação e autorização;
 - [ ] Deploy;
 - [ ] Gerenciamento e monitoramento;
@@ -52,4 +53,6 @@ docker-compose down
 
 - Documentação com o [Swagger](https://swagger.io/);
 - Conteinerização com o [Docker](https://www.docker.com/);
-- Deploy com [Heroku](https://www.heroku.com/);
+- Versionamento da BD com o [Flyway](https://flywaydb.org/);
+- Ambiente de testes com o [Testcontainers](https://www.testcontainers.org/);
+- Deploy com [AWS](https://aws.amazon.com/pt/);

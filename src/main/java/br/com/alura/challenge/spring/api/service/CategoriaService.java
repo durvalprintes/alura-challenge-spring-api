@@ -45,13 +45,13 @@ public class CategoriaService {
         return categorias;
     }
 
-    public Categoria createOrUpdate(CategoriaDto dto, Optional<String> id)
+    public Categoria createOrUpdate(CategoriaDto dto, String id)
             throws BusinessException, ResourceNotFoundException {
         Categoria categoria = new Categoria();
-        if (id.isPresent()) {
-            if (id.get().equals(categoriaLivre))
+        if (Optional.ofNullable(id).isPresent()) {
+            if (id.equals(categoriaLivre))
                 throw new BusinessException("Categoria Livre é bloqueada para alteração.");
-            categoria = findOne(id.get());
+            categoria = findOne(id);
         }
         BeanUtils.copyProperties(dto, categoria, Util.getBlankPropertyNames(dto));
         return categoriaRepository.save(categoria);
